@@ -113,7 +113,7 @@ wait_time = 0.5
 one_shot = true
 
 [node name="WallCoyoteTime" type="Timer" parent="."]
-wait_time = 0.25
+wait_time = 0.1
 one_shot = true
 
 [connection signal="timeout" from="CoyoteTime" to="." method="_on_coyote_time_timeout"]

@@ -44,11 +44,9 @@ func _physics_process(_delta: float) -> void:
 	else:	
 		if can_jump:
 			if $CoyoteTime.is_stopped():
-				print("normalCoyote")
 				$CoyoteTime.start()
 		elif can_wall_jump:
 			if $WallCoyoteTime.is_stopped():
-				print("wallCOyote")
 				$WallCoyoteTime.start()
 		if velocity.y <= 300:
 			velocity.y += var_gravity

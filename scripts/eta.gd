@@ -3,7 +3,7 @@ extends CharacterBody2D
 const speed = 150.0
 const dash_speed = 400.0
 const wall_jump_distance = 50
-const jump_height = -350.0
+const jump_height = -400.0
 const gravity = 20.0
 
 var var_gravity = gravity
@@ -15,6 +15,9 @@ var can_jump: bool = true
 var jump_applied: bool = false
 var jump_buffer: bool = false
 var jump_locked: bool = false
+
+var var_jump_applied: bool = false
+var jump_released: bool = true
 
 var wall_jump_applied: bool = false
 
@@ -47,12 +50,21 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("SPACE"):
 		if !jump_locked:
 			if can_jump:
+				var_jump_applied = false
+				jump_released = false
 				jump_action()
 			elif is_on_wall_only():
+				var_jump_applied = false
+				jump_released = false
 				wall_jump()
 			else:
 				$JumpBuffer.start()
 				jump_buffer = true
+	elif !jump_released && !Input.is_action_pressed("SPACE"):
+		jump_released = true
+	elif jump_released && !var_jump_applied && velocity.y < 0:
+		velocity.y *= 0.3
+		var_jump_applied = true
 	
 	if Input.is_action_just_pressed("SHIFT") && can_dash:
 		can_dash = false

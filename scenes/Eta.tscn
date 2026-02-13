@@ -112,7 +112,11 @@ one_shot = true
 wait_time = 0.5
 one_shot = true
 
+[node name="WallCoyoteTime" type="Timer" parent="."]
+wait_time = 0.25
+
 [connection signal="timeout" from="CoyoteTime" to="." method="_on_coyote_time_timeout"]
 [connection signal="timeout" from="JumpBuffer" to="." method="_on_jump_buffer_timeout"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]
+[connection signal="timeout" from="WallCoyoteTime" to="." method="_on_wall_coyote_time_timeout"]

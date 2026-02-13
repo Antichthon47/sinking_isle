@@ -19,6 +19,7 @@ var jump_locked: bool = false
 var var_jump_applied: bool = false
 var jump_released: bool = true
 
+var can_wall_jump: bool = false
 var wall_jump_applied: bool = false
 
 var last_direction: float = 1.0
@@ -28,35 +29,38 @@ var jump_threshold: float = -100
 func _ready() -> void:
 	$Sprites.play("idle")
 
-func _physics_process(delta: float) -> void:
-	if !is_on_floor():
-		if is_on_wall():
-			if velocity.y <= 150:
-				velocity.y += var_gravity
-			else:
-				velocity.y = 150
+func _physics_process(_delta: float) -> void:
+	if is_on_wall_only():
+		can_wall_jump = true
+		if velocity.y <= 150:
+			velocity.y += var_gravity
 		else:
-			if can_jump:
-				if $CoyoteTime.is_stopped():
-					$CoyoteTime.start()
-			if velocity.y <= 300:
-				velocity.y += var_gravity
-	elif is_on_floor() || is_on_wall():
+			velocity.y = 150
+	elif is_on_floor():
 		can_jump = true
 		$CoyoteTime.stop()
 		if jump_buffer:
 			jump_action()
+	else:	
+		if can_jump && jump_released == false:
+			if $CoyoteTime.is_stopped():
+				$CoyoteTime.start()
+		elif can_wall_jump && jump_released == false:
+			if $WallCoyoteTime.is_stopped():
+				$WallCoyoteTime.start()
+		if velocity.y <= 300:
+			velocity.y += var_gravity
 
 	if Input.is_action_just_pressed("SPACE"):
 		if !jump_locked:
-			if can_jump:
-				var_jump_applied = false
-				jump_released = false
-				jump_action()
-			elif is_on_wall_only():
+			if can_wall_jump && is_on_wall_only():
 				var_jump_applied = false
 				jump_released = false
 				wall_jump()
+			elif can_jump || (can_wall_jump && !is_on_wall_only()):
+				var_jump_applied = false
+				jump_released = false
+				jump_action()
 			else:
 				$JumpBuffer.start()
 				jump_buffer = true
@@ -119,3 +123,6 @@ func _on_dash_timer_timeout() -> void:
 
 func _on_dash_cooldown_timeout() -> void:
 	can_dash = true
+
+func _on_wall_coyote_time_timeout() -> void:
+	can_wall_jump = false

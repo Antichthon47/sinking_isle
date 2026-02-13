@@ -1,0 +1,118 @@
+[gd_scene load_steps=11 format=3 uid="uid://dor0acrk5dlmx"]
+
+[ext_resource type="Script" uid="uid://dfyh6wrcrq8jt" path="res://scripts/eta.gd" id="1_4gx6k"]
+[ext_resource type="Texture2D" uid="uid://bqh2q452hw2jn" path="res://assets/Eta.png" id="2_d52ut"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7084"]
+atlas = ExtResource("2_d52ut")
+region = Rect2(1, 1, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kseyl"]
+atlas = ExtResource("2_d52ut")
+region = Rect2(142, 1, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adcri"]
+atlas = ExtResource("2_d52ut")
+region = Rect2(48, 1, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ud5t"]
+atlas = ExtResource("2_d52ut")
+region = Rect2(95, 1, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2sj8h"]
+atlas = ExtResource("2_d52ut")
+region = Rect2(1, 142, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bcbcu"]
+atlas = ExtResource("2_d52ut")
+region = Rect2(48, 142, 46, 46)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kwcrk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7084")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7084")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kseyl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kseyl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7084")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7084")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adcri")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ud5t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kseyl")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2sj8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bcbcu")
+}],
+"loop": true,
+"name": &"jumping",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4gx6k"]
+size = Vector2(12, 19)
+
+[node name="Eta" type="CharacterBody2D"]
+script = ExtResource("1_4gx6k")
+
+[node name="Sprites" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_kwcrk")
+animation = &"idle"
+frame_progress = 0.41052416
+
+[node name="SpriteAnimation" type="AnimationPlayer" parent="."]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+root_node = NodePath("../SpriteAnimation")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1.5)
+shape = SubResource("RectangleShape2D_4gx6k")
+debug_color = Color(2.695322e-06, 0.6361956, 0.41181436, 0.41960785)
+
+[node name="PlayerCamera" type="Camera2D" parent="."]
+
+[node name="CoyoteTime" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="JumpBuffer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="DashCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="CoyoteTime" to="." method="_on_coyote_time_timeout"]
+[connection signal="timeout" from="JumpBuffer" to="." method="_on_jump_buffer_timeout"]
+[connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="DashCooldown" to="." method="_on_dash_cooldown_timeout"]

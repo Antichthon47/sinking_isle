@@ -6,6 +6,13 @@ const wall_jump_distance = 50
 const jump_height = -400.0
 const gravity = 20.0
 
+# Test dmg
+@export var max_health: int = 100
+@export var iframes_duration: float = 1.0  # seconds of invincibility after being hit
+
+var health: int
+var is_invincible: bool = false
+#####################################
 var var_gravity = gravity
 
 var moving: bool
@@ -31,6 +38,9 @@ var arrow = preload("res://scenes/Arrow.tscn")
 
 func _ready() -> void:
 	$Sprites.play("idle")
+	# Test Damage
+	health = max_health
+
 
 func _physics_process(_delta: float) -> void:
 	if is_on_wall_only():
@@ -141,3 +151,9 @@ func _on_wall_coyote_time_timeout() -> void:
 
 func _on_attack_cooldown_timeout() -> void:
 	can_attack = true
+	
+	
+# Take damage
+func take_damage(amount: int):
+	health -= amount
+	print("Player hit! Health: ", health)

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://clv62eugh44f5"]
+
+[ext_resource type="Script" uid="uid://ba3h21g837rmt" path="res://scripts/spikes.gd" id="1_5pg7g"]
+[ext_resource type="Texture2D" uid="uid://caof47kt4er85" path="res://assets/Spikes.png" id="2_xbcdo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bflj7"]
+
+[node name="Spikes" type="Area2D" unique_id=4309723]
+script = ExtResource("1_5pg7g")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1619771603]
+texture = ExtResource("2_xbcdo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=860415801]
+shape = SubResource("RectangleShape2D_bflj7")

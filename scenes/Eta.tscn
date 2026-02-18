@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dor0acrk5dlmx"]
+[gd_scene format=3 uid="uid://dor0acrk5dlmx"]
 
 [ext_resource type="Script" uid="uid://dfyh6wrcrq8jt" path="res://scripts/eta.gd" id="1_4gx6k"]
 [ext_resource type="Texture2D" uid="uid://bqh2q452hw2jn" path="res://assets/Eta.png" id="2_d52ut"]
@@ -284,53 +284,51 @@ blend_mode = 1
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4gx6k"]
 size = Vector2(12, 19)
 
-[node name="Eta" type="CharacterBody2D"]
+[node name="Eta" type="CharacterBody2D" unique_id=322721546 groups=["player"]]
 script = ExtResource("1_4gx6k")
 
-[node name="Sprites" type="AnimatedSprite2D" parent="."]
+[node name="Sprites" type="AnimatedSprite2D" parent="." unique_id=584076674]
 sprite_frames = SubResource("SpriteFrames_kwcrk")
 animation = &"walking"
 
-[node name="SpriteAnimation" type="AnimationPlayer" parent="Sprites"]
+[node name="SpriteAnimation" type="AnimationPlayer" parent="Sprites" unique_id=1848983463]
 root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_d52ut")
-}
+libraries/ = SubResource("AnimationLibrary_d52ut")
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=810900902]
 root_node = NodePath("../Sprites/SpriteAnimation")
 tree_root = SubResource("AnimationNodeBlendSpace2D_4gx6k")
 parameters/blend_position = Vector2(-0.0015949011, 0.8021978)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1258458516]
 visible = false
 position = Vector2(0, -1.5)
 shape = SubResource("RectangleShape2D_4gx6k")
 debug_color = Color(2.695322e-06, 0.6361956, 0.41181436, 0.41960785)
 
-[node name="PlayerCamera" type="Camera2D" parent="."]
+[node name="PlayerCamera" type="Camera2D" parent="." unique_id=1537924317]
 
-[node name="CoyoteTime" type="Timer" parent="."]
+[node name="CoyoteTime" type="Timer" parent="." unique_id=1240123222]
 wait_time = 0.1
 one_shot = true
 
-[node name="JumpBuffer" type="Timer" parent="."]
+[node name="JumpBuffer" type="Timer" parent="." unique_id=867116984]
 wait_time = 0.1
 one_shot = true
 
-[node name="DashTimer" type="Timer" parent="."]
+[node name="DashTimer" type="Timer" parent="." unique_id=1437706081]
 wait_time = 0.25
 one_shot = true
 
-[node name="DashCooldown" type="Timer" parent="."]
+[node name="DashCooldown" type="Timer" parent="." unique_id=1273560038]
 wait_time = 0.5
 one_shot = true
 
-[node name="WallCoyoteTime" type="Timer" parent="."]
+[node name="WallCoyoteTime" type="Timer" parent="." unique_id=2037125850]
 wait_time = 0.1
 one_shot = true
 
-[node name="AttackCooldown" type="Timer" parent="."]
+[node name="AttackCooldown" type="Timer" parent="." unique_id=2018439741]
 wait_time = 0.45
 one_shot = true
 

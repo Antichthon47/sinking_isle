@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cqoffll6ihvgx"]
+
+[ext_resource type="Script" uid="uid://cy75ah2habujs" path="res://goomba.gd" id="1_21hcc"]
+[ext_resource type="Texture2D" uid="uid://cjdordppklxgy" path="res://assets/goomba.png" id="2_s1jgw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s1jgw"]
+radius = 4.1231055
+
+[node name="goomba" type="CharacterBody2D" unique_id=2120074181]
+script = ExtResource("1_21hcc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=704487912]
+scale = Vector2(0.041262135, 0.041925468)
+texture = ExtResource("2_s1jgw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1341184684]
+shape = SubResource("CircleShape2D_s1jgw")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=621744001]
+target_position = Vector2(26, 31)

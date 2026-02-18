@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://shvch1axtkpu"]
+
+[ext_resource type="Script" uid="uid://6e1glkw2gn2n" path="res://scripts/shooter.gd" id="1_gt117"]
+[ext_resource type="Texture2D" uid="uid://j68cxuvqphkk" path="res://assets/shooter_1.png" id="2_1e8ai"]
+[ext_resource type="PackedScene" uid="uid://b257pvrodr41s" path="res://scenes/shooter_p.tscn" id="2_lynhg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lynhg"]
+radius = 6.0
+height = 16.0
+
+[node name="shooter" type="CharacterBody2D" unique_id=1134617296]
+script = ExtResource("1_gt117")
+projectile_scene = ExtResource("2_lynhg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1445525874]
+position = Vector2(0, 9.536743e-07)
+scale = Vector2(0.36956522, 0.37179488)
+texture = ExtResource("2_1e8ai")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=194794103]
+shape = SubResource("CapsuleShape2D_lynhg")
+
+[node name="Timer" type="Timer" parent="." unique_id=937160335]
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1552927884]

@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://b257pvrodr41s"]
+
+[ext_resource type="Script" uid="uid://c12rqpxvn876" path="res://scripts/shooter_p.gd" id="1_xv2jk"]
+[ext_resource type="Texture2D" uid="uid://dt5g7pbycs7fd" path="res://assets/shooter_p.png" id="2_mhkep"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mhkep"]
+radius = 4.0
+
+[node name="shooter_p" type="Area2D" unique_id=1773001970]
+script = ExtResource("1_xv2jk")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1047887665]
+position = Vector2(8.34465e-07, 1.9073484e-06)
+scale = Vector2(0.3275862, 0.3)
+texture = ExtResource("2_mhkep")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=622549831]
+shape = SubResource("CircleShape2D_mhkep")

@@ -1,0 +1,100 @@
+[gd_scene load_steps=10 format=3 uid="uid://xpnnkxuwk5ho"]
+
+[ext_resource type="Script" uid="uid://bsybmtbuixmhi" path="res://scripts/arrow.gd" id="1_4yf74"]
+[ext_resource type="Texture2D" uid="uid://bqh2q452hw2jn" path="res://assets/Eta.png" id="2_3pw4r"]
+[ext_resource type="Texture2D" uid="uid://btw40ofswrlq8" path="res://assets/arrow_particle_1.png" id="3_qhgny"]
+[ext_resource type="Texture2D" uid="uid://buyas34ek4gqs" path="res://assets/arrow_particle_2.png" id="4_vclp8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhgny"]
+atlas = ExtResource("2_3pw4r")
+region = Rect2(236, 188, 46, 46)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ony2j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhgny")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vclp8"]
+size = Vector2(3, 10)
+
+[sub_resource type="Curve" id="Curve_vclp8"]
+_data = [Vector2(0.017441869, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_nn3e7"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Arrow" type="CharacterBody2D"]
+script = ExtResource("1_4yf74")
+
+[node name="ArrowSprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ony2j")
+
+[node name="HitboxArea" type="Area2D" parent="." groups=["PlayerProjectile"]]
+
+[node name="Hitbox" type="CollisionShape2D" parent="HitboxArea"]
+position = Vector2(3, 0.5000002)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_vclp8")
+debug_color = Color(0.99496144, 0, 0.254976, 0.41960785)
+
+[node name="WoodParticles" type="CPUParticles2D" parent="."]
+position = Vector2(4, 0)
+emitting = false
+amount = 6
+texture = ExtResource("3_qhgny")
+one_shot = true
+explosiveness = 1.0
+lifetime_randomness = 0.4
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 50)
+initial_velocity_min = 0.01
+initial_velocity_max = 30.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+linear_accel_max = 40.0
+angle_max = 720.0
+scale_amount_min = 0.75
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_vclp8")
+
+[node name="MetalParticles" type="CPUParticles2D" parent="."]
+position = Vector2(4, 0)
+emitting = false
+amount = 4
+texture = ExtResource("4_vclp8")
+one_shot = true
+explosiveness = 1.0
+randomness = 0.4
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 300)
+initial_velocity_max = 20.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+linear_accel_min = -100.0
+tangential_accel_min = -50.0
+tangential_accel_max = 50.0
+damping_min = 16.495
+damping_max = 72.165
+angle_min = -720.0
+angle_max = 720.0
+scale_amount_min = 0.1
+scale_amount_curve = SubResource("Curve_nn3e7")
+
+[node name="KillTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_area_entered"]
+[connection signal="body_entered" from="HitboxArea" to="." method="_on_hitbox_area_body_entered"]
+[connection signal="timeout" from="KillTimer" to="." method="_on_kill_timer_timeout"]

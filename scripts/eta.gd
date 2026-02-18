@@ -26,6 +26,9 @@ var last_direction: float = 1.0
 
 var jump_threshold: float = -100
 
+var can_attack: bool = true
+var arrow = preload("res://scenes/Arrow.tscn")
+
 func _ready() -> void:
 	$Sprites.play("idle")
 
@@ -79,6 +82,15 @@ func _physics_process(_delta: float) -> void:
 		velocity.y = 0 
 		velocity.x = last_direction * dash_speed
 	
+	if Input.is_action_just_pressed("ENTER") && can_attack:
+		var instance = arrow.instantiate()
+		instance.spawn_pos = global_position
+		instance.direction = last_direction
+		get_parent().add_child(instance)
+		
+		can_attack = false
+		$AttackCooldown.start()
+	
 	var direction := Input.get_axis("KEY_A", "KEY_D")
 	
 	if direction:
@@ -126,3 +138,6 @@ func _on_dash_cooldown_timeout() -> void:
 
 func _on_wall_coyote_time_timeout() -> void:
 	can_wall_jump = false
+
+func _on_attack_cooldown_timeout() -> void:
+	can_attack = true

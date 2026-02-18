@@ -21,6 +21,11 @@ window/size/viewport_width=288
 window/size/viewport_height=162
 window/stretch/mode="canvas_items"
 
+[global_group]
+
+SolidTile=""
+PlayerProjectile=""
+
 [input]
 
 KEY_W={

@@ -1,23 +1,82 @@
 [gd_scene format=3 uid="uid://bgqad3l1kxgre"]
 
-[ext_resource type="Texture2D" uid="uid://cjvhreuimxhlw" path="res://assets/saw.png" id="1_7c5v0"]
 [ext_resource type="Script" uid="uid://ba51chk4103a8" path="res://scripts/saw.gd" id="1_kprxg"]
+[ext_resource type="Texture2D" uid="uid://dqqxwpn6p860u" path="res://assets/saws.png" id="2_kprxg"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ddabk"]
-radius = 9.0
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kprxg"]
+texture = ExtResource("2_kprxg")
+separation = Vector2i(1, 1)
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-1.725934, 0.5076275, 4, -0.6091528, 4, 4, -4, 4)
+2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-2.2335615, 0.20305157, 4, -0.6091528, 4, 4, -4, 4)
+3:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(0.81220436, -3.0457664, 4, -4, 4, 4, 0.30457687, 4, -0.6091528, 0.91372967)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(1.6244087, 0.20305157, 4, 4, -4, 4, -4, 0.10152531)
+3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 0, -2.1320362, 1.725935, 4, -4, 4)
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-1.725934, -4, 4, -4, 4, 4, 1.1167812, 2.436613, -1.3198318, -0.40610218)
+1:2/0 = 0
+2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 0.9137306, -4, 0.30457687, 1.725934, -4, 4)
+3:2/0 = 0
+3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 0, -2.1320362, 1.725935, 4, -4, 4)
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+12:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 2.5381393, -0.71067905, -4, 1.725934)
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+3:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+4:0/0 = 0
+4:3/0 = 0
+8:0/0 = 0
 
-[node name="Saw" type="Area2D" unique_id=1599486111]
-collision_layer = 8
-collision_mask = 3
+[sub_resource type="TileSet" id="TileSet_846d5"]
+tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 2
+sources/0 = SubResource("TileSetAtlasSource_kprxg")
+
+[node name="saw" type="TileMapLayer" unique_id=310679775 groups=["hazard"]]
+tile_set = SubResource("TileSet_846d5")
 script = ExtResource("1_kprxg")
-move_distance = 50.0
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=692231164]
-position = Vector2(0, -7.748604e-06)
-scale = Vector2(0.14021164, 0.13068181)
-texture = ExtResource("1_7c5v0")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=161506911]
-shape = SubResource("CircleShape2D_ddabk")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]

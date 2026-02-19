@@ -6,7 +6,7 @@ const wall_jump_distance = 50
 const jump_height = -400.0
 const gravity = 20.0
 
-# Test dmg
+######################Test dmg################################
 @export var max_health: int = 100
 @export var iframes_duration: float = 1.0  # seconds of invincibility after being hit
 
@@ -124,6 +124,13 @@ func _physics_process(_delta: float) -> void:
 	$Sprites.flip_h = !bool((last_direction + 1) / 2)
 
 	move_and_slide()
+	
+	# Hazard damage 
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider.is_in_group("hazard"):
+			take_damage(10)
 
 func wall_jump() -> void:
 	wall_jump_applied = true
@@ -153,7 +160,25 @@ func _on_attack_cooldown_timeout() -> void:
 	can_attack = true
 	
 	
-# Take damage
+###################Take damage#######################
 func take_damage(amount: int):
+	if is_invincible:
+		return
+	
 	health -= amount
+	health = max(health, 0)  # prevent going below 0
 	print("Player hit! Health: ", health)
+	
+	_start_iframes()
+	
+func _start_iframes():
+	is_invincible = true
+
+	var tween = create_tween().set_loops(5)
+	tween.tween_property($Sprites, "modulate:a", 0.2, iframes_duration / 10)
+	tween.tween_property($Sprites, "modulate:a", 1.0, iframes_duration / 10)
+
+	await get_tree().create_timer(iframes_duration).timeout
+	is_invincible = false
+	$Sprites.modulate.a = 1.0
+###############################################

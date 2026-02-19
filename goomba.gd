@@ -6,7 +6,7 @@ extends CharacterBody2D
 var direction: int = 1
 
 func _ready():
-	$Area2D.body_entered.connect(_on_area_2d_body_entered)
+	$Area2D.body_entered.connect(_on_body_entered)
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -16,6 +16,6 @@ func _physics_process(delta):
 	if is_on_wall():
 		direction *= -1
 
-func _on_area_2d_body_entered(body):
+func _on_body_entered(body):
 	if body.is_in_group("player"):
 		body.take_damage(damage)

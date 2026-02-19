@@ -1,15 +1,25 @@
 [gd_scene format=3 uid="uid://clv62eugh44f5"]
 
-[ext_resource type="Script" uid="uid://ba3h21g837rmt" path="res://scripts/spikes.gd" id="1_5pg7g"]
 [ext_resource type="Texture2D" uid="uid://caof47kt4er85" path="res://assets/Spikes.png" id="2_xbcdo"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bflj7"]
-
-[node name="Spikes" type="Area2D" unique_id=4309723]
-script = ExtResource("1_5pg7g")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1619771603]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5pg7g"]
 texture = ExtResource("2_xbcdo")
+separation = Vector2i(1, 1)
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 1.6244087, 1.6244086, 4, -1.015255, 1.4213572, -4, 1.1167812, -4, 0.40610218)
+1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, 4, -4, 4)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=860415801]
-shape = SubResource("RectangleShape2D_bflj7")
+[sub_resource type="TileSet" id="TileSet_xbcdo"]
+tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 2
+sources/0 = SubResource("TileSetAtlasSource_5pg7g")
+
+[node name="spikes" type="TileMapLayer" unique_id=1998035430 groups=["hazard"]]
+tile_set = SubResource("TileSet_xbcdo")

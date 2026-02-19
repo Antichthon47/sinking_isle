@@ -5,15 +5,14 @@ extends CharacterBody2D
 
 var direction: int = 1
 
+func _ready():
+	$Area2D.body_entered.connect(_on_area_2d_body_entered)
+
 func _physics_process(delta):
 	if not is_on_floor():
-		velocity.y += 900 * delta  # gravity
-
+		velocity.y += 900 * delta
 	velocity.x = speed * direction
-
 	move_and_slide()
-
-	# Flip on wall collision
 	if is_on_wall():
 		direction *= -1
 

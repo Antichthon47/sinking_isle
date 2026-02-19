@@ -6,8 +6,11 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ddabk"]
 radius = 9.0
 
-[node name="Saw" type="Area2D" unique_id=1806699050]
+[node name="Saw" type="Area2D" unique_id=1599486111]
+collision_layer = 8
+collision_mask = 3
 script = ExtResource("1_kprxg")
+move_distance = 50.0
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=692231164]
 position = Vector2(0, -7.748604e-06)

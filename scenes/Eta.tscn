@@ -285,6 +285,8 @@ blend_mode = 1
 size = Vector2(12, 19)
 
 [node name="Eta" type="CharacterBody2D" unique_id=322721546 groups=["player"]]
+collision_layer = 2
+collision_mask = 29
 script = ExtResource("1_4gx6k")
 
 [node name="Sprites" type="AnimatedSprite2D" parent="." unique_id=584076674]

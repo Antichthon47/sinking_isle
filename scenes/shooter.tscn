@@ -9,11 +9,14 @@ radius = 6.0
 height = 16.0
 
 [node name="shooter" type="CharacterBody2D" unique_id=1134617296]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_gt117")
 projectile_scene = ExtResource("2_lynhg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1445525874]
 position = Vector2(0, 9.536743e-07)
+rotation = 1.977458
 scale = Vector2(0.36956522, 0.37179488)
 texture = ExtResource("2_1e8ai")
 
@@ -23,3 +26,4 @@ shape = SubResource("CapsuleShape2D_lynhg")
 [node name="Timer" type="Timer" parent="." unique_id=937160335]
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1552927884]
+position = Vector2(10, -1)

@@ -81,12 +81,12 @@ tile_set = SubResource("TileSet_ayhjk")
 [node name="Eta" parent="." unique_id=935228446 instance=ExtResource("3_ayhjk")]
 
 [node name="Saw" parent="." unique_id=1806699050 instance=ExtResource("5_jclb3")]
-position = Vector2(38, 14)
-move_distance = 50.0
+position = Vector2(106, 15)
 speed = 1.0
 
 [node name="shooter" parent="." unique_id=1134617296 instance=ExtResource("6_6q47c")]
-position = Vector2(40, -55)
+position = Vector2(123, -88)
+rotation = 2.612758
 
 [node name="goomba" parent="." unique_id=2120074181 instance=ExtResource("7_gfl4d")]
-position = Vector2(117, 18)
+position = Vector2(168, 18)

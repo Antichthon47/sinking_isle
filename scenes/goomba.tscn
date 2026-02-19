@@ -7,14 +7,25 @@
 radius = 4.1231055
 
 [node name="goomba" type="CharacterBody2D" unique_id=2120074181]
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_21hcc")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=704487912]
 scale = Vector2(0.041262135, 0.041925468)
 texture = ExtResource("2_s1jgw")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1341184684]
-shape = SubResource("CircleShape2D_s1jgw")
-
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=621744001]
 target_position = Vector2(26, 31)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1647394257]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1341184684]
+shape = SubResource("CircleShape2D_s1jgw")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=498621042]
+shape = SubResource("CircleShape2D_s1jgw")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

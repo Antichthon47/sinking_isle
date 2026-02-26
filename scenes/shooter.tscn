@@ -1,29 +1,49 @@
-[gd_scene format=3 uid="uid://shvch1axtkpu"]
+[gd_scene load_steps=5 format=3 uid="uid://shvch1axtkpu"]
 
 [ext_resource type="Script" uid="uid://6e1glkw2gn2n" path="res://scripts/shooter.gd" id="1_gt117"]
 [ext_resource type="Texture2D" uid="uid://j68cxuvqphkk" path="res://assets/shooter_1.png" id="2_1e8ai"]
 [ext_resource type="PackedScene" uid="uid://b257pvrodr41s" path="res://scenes/shooter_p.tscn" id="2_lynhg"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_lynhg"]
-radius = 6.0
-height = 16.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_lynhg"]
+radius = 144.03125
 
-[node name="shooter" type="CharacterBody2D" unique_id=1134617296]
+[node name="shooter" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_gt117")
 projectile_scene = ExtResource("2_lynhg")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1445525874]
-position = Vector2(0, 9.536743e-07)
-rotation = 1.977458
-scale = Vector2(0.36956522, 0.37179488)
+[node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_1e8ai")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=194794103]
-shape = SubResource("CapsuleShape2D_lynhg")
+[node name="SpawnMarker" type="Marker2D" parent="Sprite"]
+position = Vector2(-7, -14)
 
-[node name="Timer" type="Timer" parent="." unique_id=937160335]
+[node name="HitboxArea" type="Area2D" parent="Sprite"]
+collision_layer = 0
+collision_mask = 32
 
-[node name="Marker2D" type="Marker2D" parent="." unique_id=1552927884]
-position = Vector2(10, -1)
+[node name="Hitbox" type="CollisionPolygon2D" parent="Sprite/HitboxArea"]
+polygon = PackedVector2Array(13, 11, -1, 18, -6, 8, -1.8743286, 5.937166, -12, -10, -3, -15, 4, 3, 8, 1)
+
+[node name="ShootCooldown" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[node name="Buffer" type="Timer" parent="."]
+
+[node name="RayCastTracker" type="RayCast2D" parent="."]
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="Detection" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_lynhg")
+debug_color = Color(0.38408616, 0.47398943, 1, 0.41960785)
+
+[connection signal="area_entered" from="Sprite/HitboxArea" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="ShootCooldown" to="." method="_on_shoot_cooldown_timeout"]
+[connection signal="timeout" from="Buffer" to="." method="_on_buffer_timeout"]
+[connection signal="area_entered" from="DetectionArea" to="." method="_on_detection_area_entered"]
+[connection signal="area_exited" from="DetectionArea" to="." method="_on_detection_area_exited"]

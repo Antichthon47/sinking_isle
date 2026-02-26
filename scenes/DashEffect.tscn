@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=3 uid="uid://dtu7du2f31fyf"]
+
+[ext_resource type="Texture2D" uid="uid://bqh2q452hw2jn" path="res://assets/Eta.png" id="1_80g57"]
+[ext_resource type="Script" uid="uid://b4u4v8baj45p" path="res://scripts/dash_effect.gd" id="2_ohhom"]
+[ext_resource type="Texture2D" uid="uid://buyas34ek4gqs" path="res://assets/arrow_particle_2.png" id="3_3egbf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcffo"]
+atlas = ExtResource("1_80g57")
+region = Rect2(1, 283, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohhom"]
+atlas = ExtResource("1_80g57")
+region = Rect2(48, 283, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3egbf"]
+atlas = ExtResource("1_80g57")
+region = Rect2(95, 283, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0dtg"]
+atlas = ExtResource("1_80g57")
+region = Rect2(142, 283, 46, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j36qy"]
+atlas = ExtResource("1_80g57")
+region = Rect2(189, 283, 46, 46)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sbrtf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcffo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ohhom")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3egbf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0dtg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j36qy")
+}],
+"loop": false,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="Curve" id="Curve_w0dtg"]
+_limits = [0.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 100), 332.83398, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_j36qy"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9651163, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Dash" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_sbrtf")
+script = ExtResource("2_ohhom")
+
+[node name="Particles" type="CPUParticles2D" parent="."]
+position = Vector2(-5, -1)
+emitting = false
+amount = 20
+texture = ExtResource("3_3egbf")
+lifetime = 0.75
+one_shot = true
+explosiveness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(1, 6)
+direction = Vector2(-500, 0)
+spread = 180.0
+gravity = Vector2(-250, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 25.0
+angular_velocity_min = -720.0
+angular_velocity_max = -720.0
+damping_min = 100.0
+damping_max = 100.0
+damping_curve = SubResource("Curve_w0dtg")
+scale_amount_min = 0.1
+scale_amount_max = 0.5
+scale_amount_curve = SubResource("Curve_j36qy")
+
+[connection signal="finished" from="Particles" to="." method="_on_particles_finished"]

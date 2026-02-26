@@ -1,34 +1,149 @@
-[gd_scene format=3 uid="uid://cqoffll6ihvgx"]
+[gd_scene load_steps=16 format=3 uid="uid://cqoffll6ihvgx"]
 
 [ext_resource type="Script" uid="uid://cy75ah2habujs" path="res://goomba.gd" id="1_21hcc"]
 [ext_resource type="Texture2D" uid="uid://cjdordppklxgy" path="res://assets/goomba.png" id="2_s1jgw"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_s1jgw"]
-radius = 5.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0j8n"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(1, 63, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5lml2"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(32, 63, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3hfl1"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(63, 63, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xycq"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(1, 32, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sii0f"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(32, 32, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xltp"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(63, 1, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ki0ht"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(63, 32, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s1jgw"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(1, 1, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgpj4"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(32, 1, 30, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l0j8n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l0j8n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5lml2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3hfl1")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xycq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sii0f")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xltp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ki0ht")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s1jgw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fgpj4")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s1jgw"]
-size = Vector2(7, 7)
+size = Vector2(18, 17)
 
-[node name="goomba" type="CharacterBody2D" unique_id=2120074181]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5lml2"]
+size = Vector2(18, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3hfl1"]
+size = Vector2(12, 6)
+
+[node name="goomba" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_21hcc")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=704487912]
-scale = Vector2(0.041262135, 0.041925468)
-texture = ExtResource("2_s1jgw")
+[node name="Sprites" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_l0j8n")
+animation = &"death"
 
-[node name="RayCast2D" type="RayCast2D" parent="." unique_id=621744001]
-target_position = Vector2(26, 31)
-
-[node name="Area2D" type="Area2D" parent="." unique_id=1647394257]
-collision_layer = 4
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1341184684]
-shape = SubResource("CircleShape2D_s1jgw")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1549216361]
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_s1jgw")
+debug_color = Color(5.2943824e-07, 0.6424827, 0.32226238, 0.41960785)
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[node name="RayCasts" type="Node2D" parent="."]
+position = Vector2(0, -0.5)
+
+[node name="GroundRay1" type="RayCast2D" parent="RayCasts"]
+position = Vector2(8, 8.5)
+target_position = Vector2(0, 5)
+
+[node name="GroundRay2" type="RayCast2D" parent="RayCasts"]
+position = Vector2(-8, 8.5)
+target_position = Vector2(0, 5)
+
+[node name="HitboxArea" type="Area2D" parent="." groups=["Enemy"]]
+collision_layer = 4
+collision_mask = 32
+
+[node name="HitboxBottom" type="CollisionShape2D" parent="HitboxArea"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_5lml2")
+debug_color = Color(0.9731441, 0.16603357, 1.92523e-07, 0.41960785)
+
+[node name="HitboxTop" type="CollisionShape2D" parent="HitboxArea"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_3hfl1")
+debug_color = Color(0.93340486, 0.2593895, 0, 0.41960785)
+
+[node name="Buffer" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

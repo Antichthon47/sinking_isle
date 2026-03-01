@@ -19,6 +19,10 @@ run/main_scene="uid://efbiilpgw3qr"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+HUD="*res://scenes/HUD.tscn"
+
 [display]
 
 window/size/viewport_width=288

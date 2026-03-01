@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://deesu1sspobns"]
+
+[ext_resource type="Script" uid="uid://cbfplnwxstv2w" path="res://scripts/WaterSurface.gd" id="1_3ormg"]
+
+[node name="WaterSurface" type="Node2D"]
+script = ExtResource("1_3ormg")
+
+[node name="Line2D" type="Line2D" parent="."]
+z_index = 200
+width = 3.0
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+z_index = 199

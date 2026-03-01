@@ -1,8 +1,16 @@
 extends CharacterBody2D
 
+	 ## added to make water feel watery when inside of it 
+@export var water_fall_multiplier: float = 0.30  
+@export var water_terminal_velocity_multiplier: float = 0.45
+@export var water_drag_per_frame: float = 0.88  
+@export var water_entry_damp: float = 0.55    
 @export var lock_camera_y: bool = false
 
 @onready var camera = $PlayerCamera
+
+var water_controller: Node = null
+var _prev_in_water: bool = false
 
 const max_hp = 10
 const max_air = 100
@@ -51,12 +59,35 @@ func _ready() -> void:
 	$Sprites.play("idle")
 
 func _physics_process(_delta: float) -> void:
+	var in_water: bool = false
+	if water_controller == null:
+		water_controller = get_tree().get_first_node_in_group("water_controller")
+	if water_controller != null:
+		in_water = float(global_position.y) >= float(water_controller.global_position.y)
+	else:
+		in_water = has_meta("in_water") and bool(get_meta("in_water"))
+	var grav_step: float = var_gravity
+	if in_water and velocity.y > 0.0:
+		grav_step = var_gravity * water_fall_multiplier
+	var air_terminal: float = 300.0
+	var wall_terminal: float = 150.0
+	if in_water:
+		air_terminal = 300.0 * water_terminal_velocity_multiplier
+		wall_terminal = 150.0 * water_terminal_velocity_multiplier
+
+	if in_water and (not _prev_in_water) and velocity.y > 0.0:
+		velocity.y *= water_entry_damp
+	if in_water and velocity.y > 0.0:
+		velocity.y *= water_drag_per_frame
+		velocity.y = min(velocity.y, air_terminal)
+	_prev_in_water = in_water
+	
 	if is_on_wall_only():
 		can_wall_jump = true
-		if velocity.y <= 150:
-			velocity.y += var_gravity
+		if velocity.y <= wall_terminal:
+			velocity.y += grav_step
 		else:
-			velocity.y = 150
+			velocity.y = wall_terminal
 	elif is_on_floor():
 		hit = false
 		can_jump = true
@@ -70,8 +101,8 @@ func _physics_process(_delta: float) -> void:
 		elif can_wall_jump:
 			if $WallCoyoteTime.is_stopped():
 				$WallCoyoteTime.start()
-		if velocity.y <= 300:
-			velocity.y += var_gravity
+		if velocity.y <= air_terminal:
+			velocity.y += grav_step
 
 	if Input.is_action_just_pressed("SPACE"):
 		if !jump_locked:
@@ -211,7 +242,5 @@ func _on_hitbox_area_body_entered(body: Node2D) -> void:
 		take_damage(1, true)
 		hit_player(-last_direction)
 	elif $DrainTimer.is_stopped():
-		if body.is_in_group("water"):
-			drain_air(1)
-		elif body.is_in_group("acid"):
+		if body.is_in_group("acid"):
 			drain_air(5)

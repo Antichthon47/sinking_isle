@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://divlvho4xmhii"]
+
+[ext_resource type="Script" uid="uid://dccuuc3yxssfj" path="res://scenes/bouncer.gd" id="1_f4kas"]
+[ext_resource type="Texture2D" uid="uid://cjdordppklxgy" path="res://assets/goomba.png" id="2_s1jgw"]
+[ext_resource type="Texture2D" uid="uid://mf8r0jvlfse4" path="res://assets/frog1.png" id="3_na6lr"]
+[ext_resource type="Texture2D" uid="uid://3luu8x63ytwe" path="res://assets/frog2.png" id="4_02okx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l0j8n"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(1, 63, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5lml2"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(32, 63, 30, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3hfl1"]
+atlas = ExtResource("2_s1jgw")
+region = Rect2(63, 63, 30, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l0j8n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l0j8n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5lml2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3hfl1")
+}],
+"loop": false,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_na6lr")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_02okx")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s1jgw"]
+size = Vector2(18, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5lml2"]
+size = Vector2(18, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3hfl1"]
+size = Vector2(12, 6)
+
+[node name="bouncer" type="CharacterBody2D" unique_id=799882618]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_f4kas")
+
+[node name="Sprites" type="AnimatedSprite2D" parent="." unique_id=332352359]
+sprite_frames = SubResource("SpriteFrames_l0j8n")
+animation = &"death"
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=109994219]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_s1jgw")
+debug_color = Color(5.2943824e-07, 0.6424827, 0.32226238, 0.41960785)
+
+[node name="RayCasts" type="Node2D" parent="." unique_id=781463696]
+position = Vector2(0, -0.5)
+
+[node name="GroundRay1" type="RayCast2D" parent="RayCasts" unique_id=623081813]
+position = Vector2(8, 8.5)
+target_position = Vector2(0, 5)
+
+[node name="GroundRay2" type="RayCast2D" parent="RayCasts" unique_id=1242326500]
+position = Vector2(-8, 8.5)
+target_position = Vector2(0, 5)
+
+[node name="HitboxArea" type="Area2D" parent="." unique_id=1686925430 groups=["Enemy"]]
+collision_layer = 4
+collision_mask = 32
+
+[node name="HitboxBottom" type="CollisionShape2D" parent="HitboxArea" unique_id=1513613328]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_5lml2")
+debug_color = Color(0.9731441, 0.16603357, 1.92523e-07, 0.41960785)
+
+[node name="HitboxTop" type="CollisionShape2D" parent="HitboxArea" unique_id=711459103]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_3hfl1")
+debug_color = Color(0.93340486, 0.2593895, 0, 0.41960785)
+
+[node name="Buffer" type="Timer" parent="." unique_id=1734179917]
+wait_time = 0.25
+one_shot = true
+
+[node name="DeathTimer" type="Timer" parent="." unique_id=2015247640]
+wait_time = 0.5
+one_shot = true
+
+[node name="JumpTimer" type="Timer" parent="." unique_id=1157961304]
+
+[connection signal="area_entered" from="HitboxArea" to="." method="_on_hitbox_area_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]
+[connection signal="timeout" from="JumpTimer" to="." method="_on_jump_timer_timeout"]
